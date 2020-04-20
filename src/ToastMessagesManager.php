@@ -68,6 +68,39 @@ class ToastMessagesManager {
   }
 
   /**
+   * Returns the settings for the selected
+   * library. Also, removes the library prefix
+   * from the keys.
+   *
+   * @param Drupal\Core\Config\Config $settings
+   * @return array
+   */
+  public function getLibrarySettings(Config $settings) {
+    $library = $settings->get('library');
+    // define library prefix
+    $library_prefix = "{$library}_";
+    // get all settings
+    $data = $settings->getRawData();
+    $initial_value = ['library' => $library];
+
+    return array_reduce(array_keys($data), function ($acc, $key) use ($library_prefix, $data) {
+      // check if $key has the right prefix
+      $is_lib_property = mb_substr($key, 0, strlen($library_prefix)) === $library_prefix;
+      // if not exclude this key
+      if (!$is_lib_property) {
+        return $acc;
+      }
+      // get value
+      $value = $data[$key];
+      // remove prefix
+      $key = str_replace($library_prefix, "", $key);
+      // merge with existing data
+      return array_merge($acc, [$key => $value]);
+
+    }, $initial_value);
+  }
+
+  /**
    * Returns
    *  TRUE: if user is admin and checkbox Disable For Admin is checked
    *  FALSE: In all other cases
