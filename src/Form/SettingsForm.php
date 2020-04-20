@@ -266,6 +266,7 @@ class SettingsForm extends ConfigFormBase {
     $config = $this->config('toast_messages.settings');
     $config
       ->delete()
+      ->set('library', $form_state->getValue('library'))
       ->set('toastr_positionClass', $form_state->getValue('toastr_positionClass'))
       ->set('toastr_showMethod', $form_state->getValue('toastr_showMethod'))
       ->set('toastr_showEasing', $form_state->getValue('toastr_showEasing'))
@@ -278,8 +279,9 @@ class SettingsForm extends ConfigFormBase {
       ->set('toastr_closeDuration', (int) $form_state->getValue('toastr_closeDuration'))
       ->set('toastr_closeButton', $form_state->getValue('toastr_closeButton'))
       ->set('toastr_preventDuplicates', $form_state->getValue('toastr_preventDuplicates'))
-      ->set('toastr_timeOut', $form_state->getValue('toastr_timeOut'))
-      ->set('toastr_extendedTimeOut', $form_state->getValue('toastr_extendedTimeOut'))
+      ->set('toastr_newestOnTop', $form_state->getValue('toastr_newestOnTop'))
+      ->set('toastr_timeOut', (int) $form_state->getValue('toastr_timeOut'))
+      ->set('toastr_extendedTimeOut', (int) $form_state->getValue('toastr_extendedTimeOut'))
       ->set('toastr_progressBar', $form_state->getValue('toastr_progressBar'))
       ->set('vanilla_toasts_timeout', (int) $form_state->getValue('vanilla_toasts_timeout'))
       ->set('vanilla_toasts_positionClass', $form_state->getValue('vanilla_toasts_positionClass'))
