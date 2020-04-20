@@ -1,0 +1,13 @@
+positionClass: toast-bottom-right
+showMethod: slideDown
+showEasing: swing
+hideMethod: slideUp
+hideEasing: swing
+closeMethod: slideUp
+closeEasing: swing
+closeButton: "true"
+preventDuplicates: "true"
+timeOut: "7000"
+extendedTimeOut: "6000"
+progressBar: "true"
+disableForAdmin: 0
