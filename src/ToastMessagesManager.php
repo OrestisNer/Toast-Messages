@@ -113,6 +113,12 @@ class ToastMessagesManager {
     );
   }
 
+  /**
+   * Attach appropriate libraries based on settings
+   *
+   * @param array $attachments
+   * @return array
+   */
   public function loadLibraries(array &$attachments) {
     $settings = $this->configFactory->getEditable('toast_messages.settings');
     $library = $settings->get('library');
