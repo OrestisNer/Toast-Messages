@@ -49,7 +49,7 @@
    * Prints message as toast.
    * The color of message is based on the type.
    */
-  const printMessage = (type, message) => {
+  const printToastrMessage = (type, message) => {
     if (type == "status") {
       toastr.success(message);
     } else if (type == "error") {
