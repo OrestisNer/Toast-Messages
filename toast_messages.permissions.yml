@@ -1,0 +1,4 @@
+administer toast messages:
+  title: "Administer Toast Messages"
+  description: "Configure the Toast Messages Settings"
+  restrict access: TRUE
