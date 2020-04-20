@@ -215,17 +215,44 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('toastr_extendedTimeOut'),
     ];
 
+    $form['vanilla_toasts_settings'] = [
+      '#type' => 'vertical_tabs',
+      '#title' => t('VanillaToasts Settings'),
+    ];
+
+    $form['vanilla_toasts_general'] = [
+      '#type' => 'details',
+      '#title' => t('General'),
+      '#group' => 'vanilla_toasts_settings',
+    ];
+
+    $form['vanilla_toasts_general']['vanilla_toasts_timeout'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Timeout (ms)'),
+      '#description' => $this->t('How long the toast will display without user interaction. Set timeout to 0 to prevent auto hiding.'),
+      '#default_value' => $config->get('vanilla_toasts_timeout'),
+    ];
+
+    $form['vanilla_toasts_general']['vanilla_toasts_positionClass'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Position Class'),
+      '#options' => [
+        'bottomCenter' => $this->t('Bottom Center'),
+        'bottomRight' => $this->t('Bottom Right'),
+        'bottomLeft' => $this->t('Bottom Left'),
+        'topRight' => $this->t('Top Right'),
+        'topLeft' => $this->t('Top Left'),
+        'topCenter' => $this->t('Top Center'),
+      ],
+      '#default_value' => $config->get('vanilla_toasts_positionClass'),
+    ];
+
     $form['disableForAdmin'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Disable for Administrator(s)'),
       '#description' => $this->t('Disable toastr for administator users. (Good for debugging)'),
-      '#default_value' => $config->get('disableForAdmin') ?? 1,
+      '#default_value' => $config->get('disableForAdmin'),
     ];
-
-    // $form['toastr_settings'] = [
-    //   '#type' => 'vertical_tabs',
-    //   '#title' => t('Toastr Settings'),
-    // ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -254,6 +281,8 @@ class SettingsForm extends ConfigFormBase {
       ->set('toastr_timeOut', $form_state->getValue('toastr_timeOut'))
       ->set('toastr_extendedTimeOut', $form_state->getValue('toastr_extendedTimeOut'))
       ->set('toastr_progressBar', $form_state->getValue('toastr_progressBar'))
+      ->set('vanilla_toasts_timeout', (int) $form_state->getValue('vanilla_toasts_timeout'))
+      ->set('vanilla_toasts_positionClass', $form_state->getValue('vanilla_toasts_positionClass'))
       ->set('disableForAdmin', $form_state->getValue('disableForAdmin'));
 
     $config->save();
