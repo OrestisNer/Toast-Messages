@@ -21,7 +21,9 @@
       const messages = { ...settings.toast_messages.messages };
       const options = { ...settings.toast_messages.options };
       const library = options.library;
+      const path = options.module_path;
       delete options.library;
+      delete options.path;
 
       const keys = Object.keys(messages);
 
@@ -36,22 +38,23 @@
           if (library === "toastr") {
             printToastrMessage(type, message);
           } else if (library === "vanilla_toasts") {
-            printVanillaToastMessage(type, message, options);
+            printVanillaToastMessage(type, message, options, path);
           }
         });
       }
     }
   };
 
-  const printVanillaToastMessage = (type, message, options) => {
+  const printVanillaToastMessage = (type, message, options, path) => {
     if (type === "status") {
       type = "success";
     }
+
     VanillaToasts.create({
       title: type.charAt(0).toUpperCase() + type.slice(1),
       text: message,
       type: type, // success, info, warning, error   / optional parameter
-      icon: options.icon, // optional parameter
+      icon: `/${path}/icons/${type}.png`, // optional parameter
       timeout: options.timeout, // hide after 5000ms, // optional paremter
       positionClass: options.positionClass
     });
@@ -84,12 +87,19 @@
     ) {
       const options = { ...response.options };
       const library = options.library;
+      const path = options.module_path;
+      delete options.path;
       delete options.library;
       if (library === "toastr") {
         toastr.options = { ...options };
         printToastrMessage(response.type, response.message);
       } else if (library === "vanilla_toasts") {
-        printVanillaToastMessage(response.type, response.message, options);
+        printVanillaToastMessage(
+          response.type,
+          response.message,
+          options,
+          path
+        );
       }
     };
   }
