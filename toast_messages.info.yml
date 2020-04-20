@@ -1,0 +1,5 @@
+name: Toast Messages
+type: module
+core: 8.x
+description: Override deafult messages with Toasts
+core_version_requirement: ^8 || ^9

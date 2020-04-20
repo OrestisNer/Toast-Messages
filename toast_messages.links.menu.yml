@@ -1,0 +1,6 @@
+toast_messages.settings_form:
+  title: "Toast Messages Settings"
+  route_name: toast_messages.settings_form
+  description: "Configure Toast Messages"
+  parent: system.admin_config_ui
+  weight: 99
