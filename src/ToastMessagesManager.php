@@ -81,4 +81,12 @@ class ToastMessagesManager {
       in_array('administrator', $this->currentUser->getRoles())
     );
   }
+
+  public function loadLibraries(array &$attachments) {
+    $settings = $this->configFactory->getEditable('toast_messages.settings');
+    $library = $settings->get('library');
+    $attachments['#attached']['library'][] = "toast_messages/{$library}";
+    $attachments['#attached']['library'][] = 'toast_messages/toast_messages';
+    return $attachments;
+  }
 }

@@ -4,10 +4,7 @@
  * Implements hook_page_attachments().
  */
 function toast_messages_page_attachments(array &$attachments) {
-  // add condition to load the selected library
-  $attachments['#attached']['library'][] = 'toast_messages/toastr';
-
-  $attachments['#attached']['library'][] = 'toast_messages/toast_messages';
+  \Drupal::service('toast_messages.manager')->loadLibraries($attachments);
 }
 
 /**
