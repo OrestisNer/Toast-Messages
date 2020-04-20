@@ -6,6 +6,13 @@ toastr:
     component:
       lib/toastr/build/toastr.min.css: { minified: true }
 
+vanilla_toasts:
+  js:
+    lib/vanilla_toasts/vanillatoasts.js: {}
+  css:
+    component:
+      lib/vanilla_toasts/vanillatoasts.css: {}
+
 toast_messages:
   js:
     js/toast_messages.js: {}
