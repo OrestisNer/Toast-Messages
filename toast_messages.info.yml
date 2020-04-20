@@ -2,4 +2,5 @@ name: Toast Messages
 type: module
 core: 8.x
 description: Override deafult messages with Toasts
+package: User interface
 core_version_requirement: ^8 || ^9
