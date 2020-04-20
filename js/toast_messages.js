@@ -82,8 +82,15 @@
       response,
       status
     ) {
-      toastr.options = response.options;
-      printMessage(response.type, response.message);
+      const options = { ...response.options };
+      const library = options.library;
+      delete options.library;
+      if (library === "toastr") {
+        toastr.options = { ...options };
+        printToastrMessage(response.type, response.message);
+      } else if (library === "vanilla_toasts") {
+        printVanillaToastMessage(response.type, response.message, options);
+      }
     };
   }
 })(jQuery, Drupal, drupalSettings);
