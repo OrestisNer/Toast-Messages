@@ -14,23 +14,5 @@ function toast_messages_page_attachments(array &$attachments) {
  * Implements hook_preprocess_HOOK().
  */
 function toast_messages_preprocess_html(&$variables) {
-
-  $settings = \Drupal::config('toast_messages.settings');
-  $current_user_roles = \Drupal::currentUser()->getRoles();
-  if (
-    !(
-      $settings->get('disableForAdmin') &&
-      in_array('administrator', $current_user_roles)
-    )
-  ) {
-    $messenger = \Drupal::messenger();
-    $messages = $messenger->all();
-    if (!empty($messages)) {
-      $messenger->deleteAll();
-      $variables['#attached']['drupalSettings']['toast_messages'] = [
-        'messages' => $messages,
-        'options' => $settings->getRawData(),
-      ];
-    }
-  }
+  \Drupal::service('toast_messages.manager')->handleMessages($variables);
 }
