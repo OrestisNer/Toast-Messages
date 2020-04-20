@@ -6,42 +6,56 @@
       $("body")
         .once()
         .each(function () {
-          if ("toast_messages" in settings) {
-            let messages = settings.toast_messages.messages;
-            toastr.options = removePrefix(
-              settings.toast_messages.options,
-              "toastr"
-            );
-            console.log(toastr.options);
-            let keys = Object.keys(messages);
-
-            //iterate through all messages
-            for (var i = 0; i < keys.length; i++) {
-              let type = keys[i];
-              let message = messages[keys[i]];
-              printMessage(type, message);
+          var checkReadyState = setInterval(() => {
+            if (document.readyState === "complete") {
+              clearInterval(checkReadyState);
+              print(settings);
             }
-          }
+          }, 100);
         });
     }
   };
 
-  const removePrefix = (options, library) => {
-    const regex = new RegExp(`${library}_`, "g");
-    return JSON.parse(JSON.stringify(options).replace(regex, ""));
+  const print = (settings) => {
+    if ("toast_messages" in settings) {
+      const messages = { ...settings.toast_messages.messages };
+      const options = { ...settings.toast_messages.options };
+      const library = options.library;
+      delete options.library;
+
+      const keys = Object.keys(messages);
+
+      if (library === "toastr") {
+        toastr.options = { ...options };
+      }
+
+      //iterate through all messages
+      for (let i = 0; i < keys.length; i++) {
+        const type = keys[i];
+        messages[type].map((message) => {
+          if (library === "toastr") {
+            printToastrMessage(type, message);
+          } else if (library === "vanilla_toasts") {
+            printVanillaToastMessage(type, message, options);
+          }
+        });
+      }
+    }
   };
 
-  // If there is ajax command
-  if (Drupal.AjaxCommands) {
-    Drupal.AjaxCommands.prototype.toastMessageCommand = function (
-      ajax,
-      response,
-      status
-    ) {
-      toastr.options = response.options;
-      printMessage(response.type, response.message);
-    };
-  }
+  const printVanillaToastMessage = (type, message, options) => {
+    if (type === "status") {
+      type = "success";
+    }
+    VanillaToasts.create({
+      title: type.charAt(0).toUpperCase() + type.slice(1),
+      text: message,
+      type: type, // success, info, warning, error   / optional parameter
+      icon: options.icon, // optional parameter
+      timeout: options.timeout, // hide after 5000ms, // optional paremter
+      positionClass: options.positionClass
+    });
+  };
 
   /**
    * @type: type of message.
@@ -60,4 +74,16 @@
       toastr.warning(message);
     }
   };
+
+  // If there is ajax command
+  if (Drupal.AjaxCommands) {
+    Drupal.AjaxCommands.prototype.toastMessageCommand = function (
+      ajax,
+      response,
+      status
+    ) {
+      toastr.options = response.options;
+      printMessage(response.type, response.message);
+    };
+  }
 })(jQuery, Drupal, drupalSettings);
