@@ -1,3 +1,4 @@
+library: toastr
 positionClass: toast-bottom-right
 showMethod: slideDown
 showEasing: swing

@@ -32,18 +32,29 @@ class SettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('toast_messages.settings');
 
-    $form['settings'] = [
+    $form['library'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Library'),
+      '#description' => $this->t('Select the JS Library you want to use for displaying messages'),
+      '#options' => [
+        'toastr' => $this->t('Toastr'),
+        'vanilla_toasts' => $this->t('VanillaToasts'),
+      ],
+      '#default_value' => $config->get('library'),
+    ];
+
+    $form['toastr_settings'] = [
       '#type' => 'vertical_tabs',
-      '#title' => t('Settings'),
+      '#title' => t('Toastr Settings'),
     ];
 
     $form['general'] = [
       '#type' => 'details',
       '#title' => t('General'),
-      '#group' => 'settings',
+      '#group' => 'toastr_settings',
     ];
 
-    $form['general']['positionClass'] = [
+    $form['general']['toastr_positionClass'] = [
       '#type' => 'select',
       '#title' => $this->t('Position'),
       '#options' => [
@@ -54,10 +65,10 @@ class SettingsForm extends ConfigFormBase {
         'toast-top-right' => $this->t('Top Right'),
         'toast-top-left' => $this->t('Top Left'),
       ],
-      '#default_value' => $config->get('positionClass') ?? 'toast-bottom-full-width',
+      '#default_value' => $config->get('toastr_positionClass'),
     ];
 
-    $form['general']['progressBar'] = [
+    $form['general']['toastr_progressBar'] = [
       '#type' => 'select',
       '#title' => $this->t('Progress Bar'),
       '#description' => $this->t('Visually indicate how long before a toast expires.'),
@@ -65,10 +76,10 @@ class SettingsForm extends ConfigFormBase {
         'true' => $this->t('True'),
         'false' => $this->t('False'),
       ],
-      '#default_value' => $config->get('progressBar') ?? 'true',
+      '#default_value' => $config->get('toastr_progressBar'),
     ];
 
-    $form['general']['newestOnTop'] = [
+    $form['general']['toastr_newestOnTop'] = [
       '#type' => 'select',
       '#title' => $this->t('Newest On Top'),
       '#description' => $this->t('Show newest toast at top.'),
@@ -76,10 +87,10 @@ class SettingsForm extends ConfigFormBase {
         'true' => $this->t('True'),
         'false' => $this->t('False'),
       ],
-      '#default_value' => $config->get('newestOnTop') ?? 'false',
+      '#default_value' => $config->get('toastr_newestOnTop'),
     ];
 
-    $form['general']['closeButton'] = [
+    $form['general']['toastr_closeButton'] = [
       '#type' => 'select',
       '#title' => $this->t('Close Button'),
       '#description' => $this->t('Optionally enable a close button'),
@@ -87,10 +98,10 @@ class SettingsForm extends ConfigFormBase {
         'true' => $this->t('True'),
         'false' => $this->t('False'),
       ],
-      '#default_value' => $config->get('closeButton') ?? 'true',
+      '#default_value' => $config->get('toastr_closeButton'),
     ];
 
-    $form['general']['preventDuplicates'] = [
+    $form['general']['toastr_preventDuplicates'] = [
       '#type' => 'select',
       '#title' => $this->t('Prevent Dublicates'),
       '#description' => $this->t('Rather than having identical toasts stack, set the preventDuplicates property to true.'),
@@ -98,113 +109,118 @@ class SettingsForm extends ConfigFormBase {
         'true' => $this->t('True'),
         'false' => $this->t('False'),
       ],
-      '#default_value' => $config->get('preventDuplicates') ?? 'true',
-    ];
-
-    $form['general']['disableForAdmin'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Disable for Administrator(s)'),
-      '#description' => $this->t('Disable toastr for administator users. (Good for debugging)'),
-      '#default_value' => $config->get('disableForAdmin') ?? 1,
+      '#default_value' => $config->get('toastr_preventDuplicates'),
     ];
 
     $form['show'] = [
       '#type' => 'details',
       '#title' => t('Show'),
-      '#group' => 'settings',
+      '#group' => 'toastr_settings',
     ];
 
-    $form['show']['showMethod'] = [
+    $form['show']['toastr_showMethod'] = [
       '#type' => 'select',
       '#title' => $this->t('Show Animation'),
       '#options' => [
         'slideDown' => $this->t('Slide Down'),
         'slideUp' => $this->t('Slide Up'),
       ],
-      '#default_value' => $config->get('showMethod') ?? 'slideDown',
+      '#default_value' => $config->get('toastr_showMethod'),
     ];
 
-    $form['show']['showEasing'] = [
+    $form['show']['toastr_showEasing'] = [
       '#type' => 'select',
       '#title' => $this->t('Show Easing'),
       '#options' => [
         'swing' => $this->t('Swing'),
         'linear' => $this->t('Linear'),
       ],
-      '#default_value' => $config->get('showEasing') ?? 'swing',
+      '#default_value' => $config->get('toastr_showEasing'),
     ];
 
     $form['hide'] = [
       '#type' => 'details',
       '#title' => t('Hide'),
-      '#group' => 'settings',
+      '#group' => 'toastr_settings',
     ];
 
-    $form['hide']['hideMethod'] = [
+    $form['hide']['toastr_hideMethod'] = [
       '#type' => 'select',
       '#title' => $this->t('Hide Animation'),
       '#options' => [
         'slideDown' => $this->t('Slide Down'),
         'slideUp' => $this->t('Slide Up'),
       ],
-      '#default_value' => $config->get('hideMethod') ?? 'slideUp',
+      '#default_value' => $config->get('toastr_hideMethod'),
     ];
 
-    $form['hide']['hideEasing'] = [
+    $form['hide']['toastr_hideEasing'] = [
       '#type' => 'select',
       '#title' => $this->t('Hide Easing'),
       '#options' => [
         'swing' => $this->t('Swing'),
         'linear' => $this->t('Linear'),
       ],
-      '#default_value' => $config->get('hideEasing') ?? 'swing',
+      '#default_value' => $config->get('toastr_hideEasing'),
     ];
 
     $form['close'] = [
       '#type' => 'details',
       '#title' => t('Close'),
-      '#group' => 'settings',
+      '#group' => 'toastr_settings',
     ];
 
-    $form['close']['closeMethod'] = [
+    $form['close']['toastr_closeMethod'] = [
       '#type' => 'select',
       '#title' => $this->t('Close Animation'),
       '#options' => [
         'slideDown' => $this->t('Slide Down'),
         'slideUp' => $this->t('Slide Up'),
       ],
-      '#default_value' => $config->get('closeMethod') ?? 'slideUp',
+      '#default_value' => $config->get('toastr_closeMethod'),
     ];
 
-    $form['close']['closeEasing'] = [
+    $form['close']['toastr_closeEasing'] = [
       '#type' => 'select',
       '#title' => $this->t('Close Easing'),
       '#options' => [
         'swing' => $this->t('Swing'),
         'linear' => $this->t('Linear'),
       ],
-      '#default_value' => $config->get('closeEasing') ?? 'swing',
+      '#default_value' => $config->get('toastr_closeEasing'),
     ];
 
     $form['duration'] = [
       '#type' => 'details',
       '#title' => t('Duration'),
-      '#group' => 'settings',
+      '#group' => 'toastr_settings',
     ];
 
-    $form['duration']['timeOut'] = [
+    $form['duration']['toastr_timeOut'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Timeout (ms)'),
       '#description' => $this->t('How long the toast will display without user interaction. Set timeout to 0 to prevent auto hiding.'),
-      '#default_value' => $config->get('timeOut') ?? "7000",
+      '#default_value' => $config->get('toastr_timeOut'),
     ];
 
-    $form['duration']['extendedTimeOut'] = [
+    $form['duration']['toastr_extendedTimeOut'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Extended Timeout (ms)'),
       '#description' => $this->t('How long the toast will display after a user hovers over it. Set timeout to 0 to prevent auto hiding.'),
-      '#default_value' => $config->get('extendedTimeOut') ?? "6000",
+      '#default_value' => $config->get('toastr_extendedTimeOut'),
     ];
+
+    $form['disableForAdmin'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable for Administrator(s)'),
+      '#description' => $this->t('Disable toastr for administator users. (Good for debugging)'),
+      '#default_value' => $config->get('disableForAdmin') ?? 1,
+    ];
+
+    // $form['toastr_settings'] = [
+    //   '#type' => 'vertical_tabs',
+    //   '#title' => t('Toastr Settings'),
+    // ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -218,18 +234,18 @@ class SettingsForm extends ConfigFormBase {
     $config = $this->config('toast_messages.settings');
     $config
       ->delete()
-      ->set('positionClass', $form_state->getValue('positionClass'))
-      ->set('showMethod', $form_state->getValue('showMethod'))
-      ->set('showEasing', $form_state->getValue('showEasing'))
-      ->set('hideMethod', $form_state->getValue('hideMethod'))
-      ->set('hideEasing', $form_state->getValue('hideEasing'))
-      ->set('closeMethod', $form_state->getValue('closeMethod'))
-      ->set('closeEasing', $form_state->getValue('closeEasing'))
-      ->set('closeButton', $form_state->getValue('closeButton'))
-      ->set('preventDuplicates', $form_state->getValue('preventDuplicates'))
-      ->set('timeOut', $form_state->getValue('timeOut'))
-      ->set('extendedTimeOut', $form_state->getValue('extendedTimeOut'))
-      ->set('progressBar', $form_state->getValue('progressBar'))
+      ->set('toastr_positionClass', $form_state->getValue('toastr_positionClass'))
+      ->set('toastr_showMethod', $form_state->getValue('toastr_showMethod'))
+      ->set('toastr_showEasing', $form_state->getValue('toastr_showEasing'))
+      ->set('toastr_hideMethod', $form_state->getValue('toastr_hideMethod'))
+      ->set('toastr_hideEasing', $form_state->getValue('toastr_hideEasing'))
+      ->set('toastr_closeMethod', $form_state->getValue('toastr_closeMethod'))
+      ->set('toastr_closeEasing', $form_state->getValue('toastr_closeEasing'))
+      ->set('toastr_closeButton', $form_state->getValue('toastr_closeButton'))
+      ->set('toastr_preventDuplicates', $form_state->getValue('toastr_preventDuplicates'))
+      ->set('toastr_timeOut', $form_state->getValue('toastr_timeOut'))
+      ->set('toastr_extendedTimeOut', $form_state->getValue('toastr_extendedTimeOut'))
+      ->set('toastr_progressBar', $form_state->getValue('toastr_progressBar'))
       ->set('disableForAdmin', $form_state->getValue('disableForAdmin'));
 
     $config->save();

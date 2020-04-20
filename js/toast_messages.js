@@ -8,10 +8,14 @@
         .each(function () {
           if ("toast_messages" in settings) {
             let messages = settings.toast_messages.messages;
-            toastr.options = settings.toast_messages.options;
+            toastr.options = removePrefix(
+              settings.toast_messages.options,
+              "toastr"
+            );
+            console.log(toastr.options);
             let keys = Object.keys(messages);
 
-            //iterate through all messagesQ
+            //iterate through all messages
             for (var i = 0; i < keys.length; i++) {
               let type = keys[i];
               let message = messages[keys[i]];
@@ -19,7 +23,12 @@
             }
           }
         });
-    },
+    }
+  };
+
+  const removePrefix = (options, library) => {
+    const regex = new RegExp(`${library}_`, "g");
+    return JSON.parse(JSON.stringify(options).replace(regex, ""));
   };
 
   // If there is ajax command
@@ -40,7 +49,7 @@
    * Prints message as toast.
    * The color of message is based on the type.
    */
-  function printMessage(type, message) {
+  const printMessage = (type, message) => {
     if (type == "status") {
       toastr.success(message);
     } else if (type == "error") {
@@ -50,5 +59,5 @@
     } else {
       toastr.warning(message);
     }
-  }
+  };
 })(jQuery, Drupal, drupalSettings);
