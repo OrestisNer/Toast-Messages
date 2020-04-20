@@ -123,6 +123,12 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('toastr_showEasing'),
     ];
 
+    $form['show']['toastr_showDuration'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Show Duration'),
+      '#default_value' => $config->get('toastr_showDuration'),
+    ];
+
     $form['hide'] = [
       '#type' => 'details',
       '#title' => t('Hide'),
@@ -150,6 +156,12 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('toastr_hideEasing'),
     ];
 
+    $form['hide']['toastr_hideDuration'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Hide Duration'),
+      '#default_value' => $config->get('toastr_hideDuration'),
+    ];
+
     $form['close'] = [
       '#type' => 'details',
       '#title' => t('Close'),
@@ -175,6 +187,12 @@ class SettingsForm extends ConfigFormBase {
         'linear' => $this->t('Linear'),
       ],
       '#default_value' => $config->get('toastr_closeEasing'),
+    ];
+
+    $form['close']['toastr_closeDuration'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Close Duration'),
+      '#default_value' => $config->get('toastr_closeDuration'),
     ];
 
     $form['duration'] = [
@@ -224,10 +242,13 @@ class SettingsForm extends ConfigFormBase {
       ->set('toastr_positionClass', $form_state->getValue('toastr_positionClass'))
       ->set('toastr_showMethod', $form_state->getValue('toastr_showMethod'))
       ->set('toastr_showEasing', $form_state->getValue('toastr_showEasing'))
+      ->set('toastr_showDuration', (int) $form_state->getValue('toastr_showDuration'))
       ->set('toastr_hideMethod', $form_state->getValue('toastr_hideMethod'))
       ->set('toastr_hideEasing', $form_state->getValue('toastr_hideEasing'))
+      ->set('toastr_hideDuration', (int) $form_state->getValue('toastr_hideDuration'))
       ->set('toastr_closeMethod', $form_state->getValue('toastr_closeMethod'))
       ->set('toastr_closeEasing', $form_state->getValue('toastr_closeEasing'))
+      ->set('toastr_closeDuration', (int) $form_state->getValue('toastr_closeDuration'))
       ->set('toastr_closeButton', $form_state->getValue('toastr_closeButton'))
       ->set('toastr_preventDuplicates', $form_state->getValue('toastr_preventDuplicates'))
       ->set('toastr_timeOut', $form_state->getValue('toastr_timeOut'))
