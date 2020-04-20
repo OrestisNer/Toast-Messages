@@ -69,46 +69,30 @@ class SettingsForm extends ConfigFormBase {
     ];
 
     $form['general']['toastr_progressBar'] = [
-      '#type' => 'select',
+      '#type' => 'checkbox',
       '#title' => $this->t('Progress Bar'),
       '#description' => $this->t('Visually indicate how long before a toast expires.'),
-      '#options' => [
-        'true' => $this->t('True'),
-        'false' => $this->t('False'),
-      ],
       '#default_value' => $config->get('toastr_progressBar'),
     ];
 
     $form['general']['toastr_newestOnTop'] = [
-      '#type' => 'select',
+      '#type' => 'checkbox',
       '#title' => $this->t('Newest On Top'),
       '#description' => $this->t('Show newest toast at top.'),
-      '#options' => [
-        'true' => $this->t('True'),
-        'false' => $this->t('False'),
-      ],
       '#default_value' => $config->get('toastr_newestOnTop'),
     ];
 
     $form['general']['toastr_closeButton'] = [
-      '#type' => 'select',
+      '#type' => 'checkbox',
       '#title' => $this->t('Close Button'),
       '#description' => $this->t('Optionally enable a close button'),
-      '#options' => [
-        'true' => $this->t('True'),
-        'false' => $this->t('False'),
-      ],
       '#default_value' => $config->get('toastr_closeButton'),
     ];
 
     $form['general']['toastr_preventDuplicates'] = [
-      '#type' => 'select',
+      '#type' => 'checkbox',
       '#title' => $this->t('Prevent Dublicates'),
       '#description' => $this->t('Rather than having identical toasts stack, set the preventDuplicates property to true.'),
-      '#options' => [
-        'true' => $this->t('True'),
-        'false' => $this->t('False'),
-      ],
       '#default_value' => $config->get('toastr_preventDuplicates'),
     ];
 
@@ -197,14 +181,14 @@ class SettingsForm extends ConfigFormBase {
     ];
 
     $form['duration']['toastr_timeOut'] = [
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => $this->t('Timeout (ms)'),
       '#description' => $this->t('How long the toast will display without user interaction. Set timeout to 0 to prevent auto hiding.'),
       '#default_value' => $config->get('toastr_timeOut'),
     ];
 
     $form['duration']['toastr_extendedTimeOut'] = [
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => $this->t('Extended Timeout (ms)'),
       '#description' => $this->t('How long the toast will display after a user hovers over it. Set timeout to 0 to prevent auto hiding.'),
       '#default_value' => $config->get('toastr_extendedTimeOut'),
