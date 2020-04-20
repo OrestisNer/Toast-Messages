@@ -1,4 +1,5 @@
 services:
   toast_messages.manager:
     class: Drupal\toast_messages\ToastMessagesManager
-    arguments: ["@config.factory", "@messenger", "@current_user"]
+    arguments:
+      ["@config.factory", "@messenger", "@current_user", "@module_handler"]

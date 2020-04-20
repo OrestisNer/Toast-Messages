@@ -3,6 +3,7 @@
 namespace Drupal\toast_messages;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 
@@ -33,16 +34,25 @@ class ToastMessagesManager {
   protected $currentUser;
 
   /**
+   * Drupal\Core\Extension\ModuleHandler definition.
+   *
+   * @var Drupal\Core\Extension\ModuleHandler
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs a new ToastMessagesManager object.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
     MessengerInterface $messenger,
-    AccountProxyInterface $current_user
+    AccountProxyInterface $current_user,
+    ModuleHandler $module_handler
   ) {
     $this->configFactory = $config_factory;
     $this->messenger = $messenger;
     $this->currentUser = $current_user;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -79,7 +89,10 @@ class ToastMessagesManager {
     $library_prefix = "{$library}_";
     // get all settings
     $data = $settings->getRawData();
-    $initial_value = ['library' => $library];
+    $initial_value = [
+      'library' => $library,
+      'module_path' => $this->moduleHandler->getModule('toast_messages')->getPath(),
+    ];
 
     return array_reduce(array_keys($data), function ($acc, $key) use ($library_prefix, $data) {
       // check if $key has the right prefix
