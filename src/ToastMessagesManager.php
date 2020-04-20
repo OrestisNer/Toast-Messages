@@ -2,7 +2,6 @@
 
 namespace Drupal\toast_messages;
 
-use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -53,14 +52,13 @@ class ToastMessagesManager {
    * @return void
    */
   public function handleMessages(&$variables) {
-    $settings = $this->configFactory->getEditable('toast_messages.settings');
-    if (!$this->disableForAdmin($settings)) {
+    if (!$this->disableForAdmin()) {
       $messages = $this->messenger->all();
       if (!empty($messages)) {
         $this->messenger->deleteAll();
         $variables['#attached']['drupalSettings']['toast_messages'] = [
           'messages' => $messages,
-          'options' => $this->getLibrarySettings($settings),
+          'options' => $this->getLibrarySettings(),
         ];
       }
     }
@@ -72,10 +70,10 @@ class ToastMessagesManager {
    * library. Also, removes the library prefix
    * from the keys.
    *
-   * @param Drupal\Core\Config\Config $settings
    * @return array
    */
-  public function getLibrarySettings(Config $settings) {
+  public function getLibrarySettings() {
+    $settings = $this->configFactory->getEditable('toast_messages.settings');
     $library = $settings->get('library');
     // define library prefix
     $library_prefix = "{$library}_";
@@ -105,10 +103,10 @@ class ToastMessagesManager {
    *  TRUE: if user is admin and checkbox Disable For Admin is checked
    *  FALSE: In all other cases
    *
-   * @param Drupal\Core\Config\Config $settings
    * @return boolean
    */
-  public function disableForAdmin(Config $settings) {
+  public function disableForAdmin() {
+    $settings = $this->configFactory->getEditable('toast_messages.settings');
     return (
       $settings->get('disableForAdmin') &&
       in_array('administrator', $this->currentUser->getRoles())
