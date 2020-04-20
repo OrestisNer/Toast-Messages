@@ -1,5 +1,4 @@
-1) Create Permissions for Administer Toast Messages
-2) Add VanillaToasts integration
-3) Crate Tests
-4) Add Settings to controll duration per message type
-5) Add deafult settings
+- Create Permissions for Administer Toast Messages
+- Add VanillaToasts integration
+- Crate Tests
+- Add Settings to controll duration per message type
