@@ -107,7 +107,8 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('Show Animation'),
       '#options' => [
         'slideDown' => $this->t('Slide Down'),
-        'slideUp' => $this->t('Slide Up'),
+        'fadeIn' => $this->t('Fade In'),
+        'show' => $this->t('Show'),
       ],
       '#default_value' => $config->get('toastr_showMethod'),
     ];
@@ -132,8 +133,9 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'select',
       '#title' => $this->t('Hide Animation'),
       '#options' => [
-        'slideDown' => $this->t('Slide Down'),
+        'fadeOut' => $this->t('Fade Out'),
         'slideUp' => $this->t('Slide Up'),
+        'hide' => $this->t('Hide'),
       ],
       '#default_value' => $config->get('toastr_hideMethod'),
     ];
@@ -158,8 +160,9 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'select',
       '#title' => $this->t('Close Animation'),
       '#options' => [
-        'slideDown' => $this->t('Slide Down'),
+        'fadeOut' => $this->t('Fade Out'),
         'slideUp' => $this->t('Slide Up'),
+        'hide' => $this->t('Hide'),
       ],
       '#default_value' => $config->get('toastr_closeMethod'),
     ];
