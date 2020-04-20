@@ -25,7 +25,7 @@ class ToastMessageCommand implements CommandInterface {
       'message' => $this->message,
       'type' => $this->type,
       // @todo add Dependency Injection
-      'options' => \Drupal::config('toast_messages.settings')->getRawData(),
+      'options' => \Drupal::service('toast_messages.manager')->getLibrarySettings(),
     ];
   }
 }
