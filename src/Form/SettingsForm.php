@@ -215,6 +215,19 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('toastr_extendedTimeOut'),
     ];
 
+    $form['extras'] = [
+      '#type' => 'details',
+      '#title' => t('Extras'),
+      '#group' => 'toastr_settings',
+    ];
+
+    $form['extras']['toastr_css'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('CSS'),
+      '#description' => $this->t('Custom css will be imported in page'),
+      '#default_value' => $config->get('toastr_css'),
+    ];
+
     $form['vanilla_toasts_settings'] = [
       '#type' => 'vertical_tabs',
       '#title' => t('VanillaToasts Settings'),
@@ -283,6 +296,7 @@ class SettingsForm extends ConfigFormBase {
       ->set('toastr_timeOut', (int) $form_state->getValue('toastr_timeOut'))
       ->set('toastr_extendedTimeOut', (int) $form_state->getValue('toastr_extendedTimeOut'))
       ->set('toastr_progressBar', $form_state->getValue('toastr_progressBar'))
+      ->set('toastr_css', $form_state->getValue('toastr_css'))
       ->set('vanilla_toasts_timeout', (int) $form_state->getValue('vanilla_toasts_timeout'))
       ->set('vanilla_toasts_positionClass', $form_state->getValue('vanilla_toasts_positionClass'))
       ->set('disableForAdmin', $form_state->getValue('disableForAdmin'));

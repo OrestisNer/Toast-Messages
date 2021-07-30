@@ -78,6 +78,11 @@
     }
   };
 
+  const addToastCss = (css) => {
+    $('head #toast-custom-css').remove();
+    $('head').append(`<style id='toast-custom-css'>${css}</style>`);
+  }
+
   // If there is ajax command
   if (Drupal.AjaxCommands) {
     Drupal.AjaxCommands.prototype.toastMessageCommand = function (
@@ -91,6 +96,7 @@
       delete options.path;
       delete options.library;
       if (library === "toastr") {
+        addToastCss(options.css);
         toastr.options = { ...options };
         printToastrMessage(response.type, response.message);
       } else if (library === "vanilla_toasts") {
